@@ -105,7 +105,7 @@ public class PKSendPushNotificationUtil implements AutoCloseable {
         }
     }
 
-    public PushNotificationFuture<SimpleApnsPushNotification, PushNotificationResponse<SimpleApnsPushNotification>> sendPushNotificationAsync(final String pushtoken) {
+    public PushNotificationFuture<SimpleApnsPushNotification, PushNotificationResponse<SimpleApnsPushNotification>> sendPushNotificationAsync(final String pushtoken, final String topic) {
 
         LOGGER.debug("Sending Push notification for key: {}", pushtoken);
         
@@ -115,7 +115,7 @@ public class PKSendPushNotificationUtil implements AutoCloseable {
         final String payload = payloadBuilder.buildWithDefaultMaximumLength();
         final String token = TokenUtil.sanitizeTokenString(pushtoken);
 
-        SimpleApnsPushNotification pushNotification = new SimpleApnsPushNotification(token, "com.example.myApp", payload);
+        SimpleApnsPushNotification pushNotification = new SimpleApnsPushNotification(token, topic, payload);
         LOGGER.debug("Send Push notification for key: {}", pushtoken);
         return client.sendNotification(pushNotification);
     }
